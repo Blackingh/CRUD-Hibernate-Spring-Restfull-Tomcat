@@ -19,8 +19,8 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("REST Web Services")
-				.description("Swagger documentation for your project REST webservices").termsOfServiceUrl("")
+		return new ApiInfoBuilder().title("Servicios Web con REST")
+				.description("Documentacion con Swagger, los servicios se encargan de hacer un CRUD a una base de datos").termsOfServiceUrl("")
 				.license("client license").licenseUrl("").version("1.0").build();
 	}
 }
