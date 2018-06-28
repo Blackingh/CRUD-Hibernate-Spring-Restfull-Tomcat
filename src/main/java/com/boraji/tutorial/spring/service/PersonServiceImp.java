@@ -16,6 +16,7 @@ public class PersonServiceImp implements PersonService{
 	@Autowired
 	private PersonDao personDao;
 	
+	@Transactional
 	@Override
 	public long save(Person person) {
 		return personDao.save(person);
