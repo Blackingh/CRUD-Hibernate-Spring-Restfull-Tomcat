@@ -17,6 +17,9 @@ import com.boraji.tutorial.spring.service.PersonService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @Api(value="Person Controller")
@@ -26,41 +29,45 @@ public class PersonController {
    private PersonService personService;
    
    /*---Add new Person---*/
-   @ApiOperation(value="Guarda una persona")
    @PostMapping("/person")
-   public ResponseEntity<?> savePerson(@RequestBody Person person) {
+   @ApiOperation(value="Crea una persona", response = ResponseEntity.class, notes="Retorna una respuesta OK")
+   public ResponseEntity<?> savePerson(@ApiParam(value="Un objeto Person tipo Json",required= true) @RequestBody Person person) {
       long id = personService.save(person);
       return ResponseEntity.ok().body("New Person has been saved with ID:" + id);
    }
 
-   /*---Get a book by id---*/
-   @ApiOperation(value="Obtiene una persona por ID")
+   /*---Get a Person by id---*/
    @GetMapping("/person/{id}")
-   public ResponseEntity<Person> getPerson(@PathVariable("id") long id) {
+   @ApiOperation(value="Busca una persona",response = Person.class, notes="Retorna una persona por ID")
+   public ResponseEntity<Person> getPerson(@ApiParam(value="El ID de la persona a buscar",required= true) @PathVariable("id") long id) {
       Person person = personService.get(id);
       return ResponseEntity.ok().body(person);
    }
 
-   /*---get all books---*/
-   @ApiOperation(value="Obtiene una lista de personas")
+   /*---get all Person---*/
    @GetMapping("/person")
+   @ApiOperation(value="Busca todas personas", response = List.class, notes ="Retorna una lista de objetos Person")
    public ResponseEntity<List<Person>> listPerson() {
       List<Person> persons = personService.list();
       return ResponseEntity.ok().body(persons);
    }
 
-   /*---Update a book by id---*/
-   @ApiOperation(value="Actualiza una persona por ID")
+   /*---Update a Person by id---*/
    @PutMapping("/person/{id}")
-   public ResponseEntity<?> updatePerson(@PathVariable("id") long id, @RequestBody Person person) {
+   @ApiOperation(value ="Actualiza una persona", response = ResponseEntity.class, notes = "Restorna una respuesta OK")
+   @ApiResponses({@ApiResponse(code = 500, message = "The book does not exist")})
+   public ResponseEntity<?> updatePerson(@ApiParam(value = "El ID de la persona a actualizar", required = true) @PathVariable("id") long id, 
+   			@ApiParam(value = "Un objeto Person tipo Json", required = true) @RequestBody Person person) {
+	   
       personService.update(id, person);
       return ResponseEntity.ok().body("Person has been updated successfully.");
    }
 
-   /*---Delete a book by id---*/
-   @ApiOperation(value="Elimina una persona por id")
+   /*---Delete a Person by id---*/
    @DeleteMapping("/person/{id}")
-   public ResponseEntity<?> deletePerson(@PathVariable("id") long id) {
+   @ApiOperation(value="Elimina una persona", response = ResponseEntity.class, notes = "Retorna una respuesta OK")
+   @ApiResponses({@ApiResponse(code = 500, message = "The book does not exist")})
+   public ResponseEntity<?> deletePerson(@ApiParam(value = "El ID de la persona a eliminar", required= true) @PathVariable("id") long id) {
       personService.delete(id);
       return ResponseEntity.ok().body("Person has been deleted successfully.");
    }
