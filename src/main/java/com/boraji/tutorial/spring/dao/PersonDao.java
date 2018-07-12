@@ -7,7 +7,7 @@ import com.boraji.tutorial.spring.model.Person;
 
 public interface PersonDao {
 
-	long save(Person person);
+	   Person save(Person person);
 
 	   Person get(long id);
 

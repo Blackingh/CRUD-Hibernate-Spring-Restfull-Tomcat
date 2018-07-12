@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class Book {
 
    @Id
+   @Column(name="id")
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @ApiModelProperty(value = "La ID del libro", notes ="No es obligatoria por que se genera automaticamente", required = false)
    private Long id;

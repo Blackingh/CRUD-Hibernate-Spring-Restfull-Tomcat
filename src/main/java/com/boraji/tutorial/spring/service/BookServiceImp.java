@@ -18,7 +18,7 @@ public class BookServiceImp implements BookService {
 
    @Transactional
    @Override
-   public long save(Book book) {
+   public Book save(Book book) {
       return bookDao.save(book);
    }
 

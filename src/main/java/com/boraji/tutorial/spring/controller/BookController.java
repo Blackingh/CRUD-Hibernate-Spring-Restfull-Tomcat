@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
+      import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 @Api(value="Book Controller")
 public class BookController {
@@ -29,14 +29,16 @@ public class BookController {
    private BookService bookService;
 
    /*---Add new book---*/
+   @CrossOrigin
    @PostMapping("/book")
-   @ApiOperation(value="Crea un libro", response = ResponseEntity.class, notes = "Retorna una respuesta OK")
-   public ResponseEntity<?> saveBook(@ApiParam(value = "Un objeto Book tipo Json", required = true) @RequestBody Book book) {
-      long id = bookService.save(book);
-      return ResponseEntity.ok().body("New Book has been saved with ID:" + id);
+   @ApiOperation(value="Crea un libro", response = ResponseEntity.class, notes = "Retorna el libro añadido")
+   public ResponseEntity<Book> saveBook(@ApiParam(value = "Un objeto Book tipo Json", required = true) @RequestBody Book book) {
+      Book bookReturn = bookService.save(book);
+      return ResponseEntity.ok().body(bookReturn);
    }
 
    /*---Get a book by id---*/
+   @CrossOrigin
    @GetMapping("/book/{id}")
    @ApiOperation(value="Busca un Libro", response = Book.class, notes = "Retorna una libro por ID")
    public ResponseEntity<Book> getBook(@ApiParam(value="El ID del libro a buscar",required = true) @PathVariable("id") long id) {
@@ -45,6 +47,7 @@ public class BookController {
    }
 
    /*---get all books---*/
+   @CrossOrigin
    @GetMapping("/book")
    @ApiOperation(value="Busca todos los libros", response = List.class , notes = "Retorna una lista de objetos Book")
    public ResponseEntity<List<Book>> listBook() {
@@ -53,17 +56,19 @@ public class BookController {
    }
 
    /*---Update a book by id---*/
+   @CrossOrigin
    @PutMapping("/book/{id}")
-   @ApiOperation(value="Actualiza un libro por ID", response = ResponseEntity.class, notes="Restorna una respuesta OK")
+   @ApiOperation(value="Actualiza un libro por ID", response = ResponseEntity.class, notes="Restorna el libro actualizado")
    @ApiResponses({@ApiResponse(code = 500, message = "The book does not exist")})
-   public ResponseEntity<?> updateBook(@ApiParam(value="El ID del libro a actualizar",required= true) @PathVariable("id")long id, 
+   public ResponseEntity<Book> updateBook(@ApiParam(value="El ID del libro a actualizar",required= true) @PathVariable("id")long id, 
    			@ApiParam(value="Un objeto Book tipo Json",required= true)	@RequestBody Book book) {
 	   
       bookService.update(id, book);
-      return ResponseEntity.ok().body("Book has been updated successfully.");
+      return ResponseEntity.ok().body(book);
    }
 
    /*---Delete a book by id---*/
+   @CrossOrigin
    @DeleteMapping("/book/{id}")
    @ApiOperation(value="Elimina un libro por ID", response = ResponseEntity.class, notes="Retorna una respuesta OK")
    @ApiResponses({@ApiResponse(code = 500, message = "The book does not exist")})

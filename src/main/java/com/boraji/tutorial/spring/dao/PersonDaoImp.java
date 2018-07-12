@@ -17,9 +17,9 @@ public class PersonDaoImp implements PersonDao{
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public long save(Person person) {
+	public Person save(Person person) {
 		sessionFactory.getCurrentSession().save(person);
-		return person.getIdentification();
+		return person;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class PersonDaoImp implements PersonDao{
 	    person2.setName(person.getName());
 	    person2.setLastName(person.getLastName());
 	    person.setAge(person.getAge());
-	    session.flush();		
+	    session.flush();
 	}
 
 	@Override

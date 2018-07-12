@@ -14,7 +14,7 @@ public class Person {
 	@Id
 	@Column(name="id")
 	@ApiModelProperty(value = "EL ID de la persona",notes="Es obligatoria por que la persona necesita un ID", required = true)
-	private int identification;
+	private long identification;
 	
 	@Column(name="first_name")
 	@ApiModelProperty(value = "EL nombre de la persona",notes="Es obligatoria por que la persona necesita un nombre", required = true)
@@ -28,11 +28,11 @@ public class Person {
 	@ApiModelProperty(value = "La edad de la persona",notes="Es obligatoria por que la persona necesita una edad", required = true)
 	private int age;
 
-	public int getIdentification() {
+	public long getIdentification() {
 		return identification;
 	}
 
-	public void setIdentification(int identification) {
+	public void setIdentification(long identification) {
 		this.identification = identification;
 	}
 

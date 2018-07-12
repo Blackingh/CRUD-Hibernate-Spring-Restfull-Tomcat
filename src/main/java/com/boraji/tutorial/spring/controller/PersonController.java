@@ -4,13 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.boraji.tutorial.spring.model.Person;
 import com.boraji.tutorial.spring.service.PersonService;
@@ -20,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @Api(value="Person Controller")
@@ -29,14 +24,16 @@ public class PersonController {
    private PersonService personService;
    
    /*---Add new Person---*/
+   @CrossOrigin
    @PostMapping("/person")
-   @ApiOperation(value="Crea una persona", response = ResponseEntity.class, notes="Retorna una respuesta OK")
+   @ApiOperation(value="Crea una persona", response = ResponseEntity.class, notes="Retorna la person añadida")
    public ResponseEntity<?> savePerson(@ApiParam(value="Un objeto Person tipo Json",required= true) @RequestBody Person person) {
-      long id = personService.save(person);
-      return ResponseEntity.ok().body("New Person has been saved with ID:" + id);
+      Person personRetur = personService.save(person);
+      return ResponseEntity.ok().body(personRetur);
    }
 
    /*---Get a Person by id---*/
+   @CrossOrigin
    @GetMapping("/person/{id}")
    @ApiOperation(value="Busca una persona",response = Person.class, notes="Retorna una persona por ID")
    public ResponseEntity<Person> getPerson(@ApiParam(value="El ID de la persona a buscar",required= true) @PathVariable("id") long id) {
@@ -45,6 +42,7 @@ public class PersonController {
    }
 
    /*---get all Person---*/
+   @CrossOrigin
    @GetMapping("/person")
    @ApiOperation(value="Busca todas personas", response = List.class, notes ="Retorna una lista de objetos Person")
    public ResponseEntity<List<Person>> listPerson() {
@@ -53,17 +51,19 @@ public class PersonController {
    }
 
    /*---Update a Person by id---*/
+   @CrossOrigin
    @PutMapping("/person/{id}")
-   @ApiOperation(value ="Actualiza una persona", response = ResponseEntity.class, notes = "Restorna una respuesta OK")
+   @ApiOperation(value ="Actualiza una persona", response = ResponseEntity.class, notes = "Restorna la persona actualizada")
    @ApiResponses({@ApiResponse(code = 500, message = "The book does not exist")})
-   public ResponseEntity<?> updatePerson(@ApiParam(value = "El ID de la persona a actualizar", required = true) @PathVariable("id") long id, 
+   public ResponseEntity<Person> updatePerson(@ApiParam(value = "El ID de la persona a actualizar", required = true) @PathVariable("id") long id, 
    			@ApiParam(value = "Un objeto Person tipo Json", required = true) @RequestBody Person person) {
 	   
       personService.update(id, person);
-      return ResponseEntity.ok().body("Person has been updated successfully.");
+      return ResponseEntity.ok().body(person);
    }
 
    /*---Delete a Person by id---*/
+   @CrossOrigin
    @DeleteMapping("/person/{id}")
    @ApiOperation(value="Elimina una persona", response = ResponseEntity.class, notes = "Retorna una respuesta OK")
    @ApiResponses({@ApiResponse(code = 500, message = "The book does not exist")})

@@ -18,7 +18,7 @@ public class PersonServiceImp implements PersonService{
 	
 	@Transactional
 	@Override
-	public long save(Person person) {
+	public Person save(Person person) {
 		return personDao.save(person);
 	}
 

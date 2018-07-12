@@ -6,7 +6,7 @@ import com.boraji.tutorial.spring.model.Book;
 
 public interface BookDao {
 
-   long save(Book book);
+   Book save(Book book);
 
    Book get(long id);
 
