@@ -26,7 +26,7 @@ public class Rental {
 	private Person person;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
 	private List<Book> book;
 	
 	

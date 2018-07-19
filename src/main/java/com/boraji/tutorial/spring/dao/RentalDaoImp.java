@@ -1,6 +1,8 @@
 package com.boraji.tutorial.spring.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -65,8 +67,16 @@ public class RentalDaoImp implements RentalDao {
    public void deleteBooksPerson(int id, List<Book> bookList) {
 	   Session session = sessionFactory.getCurrentSession();
 	   Rental rental = session.byId(Rental.class).load(id);
+	   List<Book> bookListRemoved = new ArrayList<>();
 	   for(Book book : bookList) {
-		   rental.getBooks().remove(book);
+		   bookListRemoved = rental.getBooks()
+				   .stream()
+				   .filter(item -> item.getId() != book.getId())
+				   .collect(Collectors.toList());
+		   rental.getBooks().clear();
+		   rental.getBooks().addAll(bookListRemoved);
+		   			
 	   }
+	   session.save(rental);
    }
 }

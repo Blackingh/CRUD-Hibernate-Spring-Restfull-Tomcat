@@ -13,42 +13,42 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("Modelo Book")
 public class Book {
 
-   @Id
-   @Column(name="id")
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @ApiModelProperty(value = "La ID del libro", notes ="No es obligatoria por que se genera automaticamente", required = false)
-   private Long id;
-   
-   @Column(name="title")
-   @ApiModelProperty(value = "El titulo del libro", notes ="Es obligatoria por que se necesita identificar el libro", required = true)
-   private String title;
-   
-   @Column(name="author")
-   @ApiModelProperty(value = "El nombre del autor", notes ="Es obligatoria por que se necesita identificar el autor", required = true)
-   private String author;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "La ID del libro", notes = "No es obligatoria por que se genera automaticamente", required = false)
+	private Long id;
 
-   public Long getId() {
-      return id;
-   }
+	@Column(name = "title")
+	@ApiModelProperty(value = "El titulo del libro", notes = "Es obligatoria por que se necesita identificar el libro", required = true)
+	private String title;
 
-   public void setId(Long id) {
-      this.id = id;
-   }
+	@Column(name = "author")
+	@ApiModelProperty(value = "El nombre del autor", notes = "Es obligatoria por que se necesita identificar el autor", required = true)
+	private String author;
+	
+	public long getId() {
+		return this.id;
+	}
 
-   public String getTitle() {
-      return title;
-   }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-   public void setTitle(String title) {
-      this.title = title;
-   }
+	public String getTitle() {
+		return title;
+	}
 
-   public String getAuthor() {
-      return author;
-   }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-   public void setAuthor(String author) {
-      this.author = author;
-   }
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
 }
